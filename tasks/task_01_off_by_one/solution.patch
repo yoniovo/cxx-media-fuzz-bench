@@ -1,0 +1,23 @@
+diff --git a/src/riff_parser.cpp b/src/riff_parser.cpp
+index 7de2799..dc27649 100644
+--- a/src/riff_parser.cpp
++++ b/src/riff_parser.cpp
+@@ -140,16 +140,8 @@ bool RiffParser::parseMetadataTag(const uint8_t* tag_data, size_t tag_len, std::
+         return false;
+     }
+ 
+-    /* VULNERABLE LOGIC:
+-     * Allocates 'tag_len' bytes, but writes null terminator at buf[tag_len].
+-     * Index tag_len is out of bounds by 1 byte!
+-     */
+-    char* buf = new char[tag_len];
+-    std::memcpy(buf, tag_data, tag_len);
+-    buf[tag_len] = '\0'; /* Off-by-one write! */
+-
+-    out_val = std::string(buf);
+-    delete[] buf;
++    /* Safe string construction without manual allocation */
++    out_val = std::string(reinterpret_cast<const char*>(tag_data), tag_len);
+     return true;
+ }
+ 

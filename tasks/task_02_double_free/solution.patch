@@ -1,0 +1,22 @@
+diff --git a/src/media_stream.cpp b/src/media_stream.cpp
+index abf0e21..f2356bf 100644
+--- a/src/media_stream.cpp
++++ b/src/media_stream.cpp
+@@ -24,16 +24,10 @@ bool StreamFrameBuffer::allocate(size_t size) {
+     return true;
+ }
+ 
+-/* VULNERABILITY 2: Double Free on error unwinding */
+ void StreamFrameBuffer::release() {
+     if (m_data) {
+         delete[] m_data;
+-        /* VULNERABLE LOGIC:
+-         * Fails to reset m_data to nullptr!
+-         * Leaves dangling pointer in m_data.
+-         * When ~StreamFrameBuffer() runs on destruction, delete[] is called again!
+-         */
+-        /* Missing: m_data = nullptr; */
++        m_data = nullptr;
+     }
+     m_size = 0;
+ }

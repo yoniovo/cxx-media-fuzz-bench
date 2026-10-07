@@ -1,0 +1,36 @@
+diff --git a/src/riff_parser.cpp b/src/riff_parser.cpp
+index 7de2799..1b333ab 100644
+--- a/src/riff_parser.cpp
++++ b/src/riff_parser.cpp
+@@ -161,15 +161,23 @@ std::string RiffParser::getMetadata(const std::string& key) const {
+     return "";
+ }
+ 
+-/* VULNERABILITY 3: Signed Integer Overflow (UBSan) */
++/* Safe checked arithmetic calculation */
+ int32_t RiffParser::calculateSampleBufferSize(int32_t num_frames, int32_t samples_per_frame, int32_t channels) const {
+-    /* VULNERABLE LOGIC:
+-     * Signed integer arithmetic overflow if num_frames * samples_per_frame exceeds INT32_MAX
+-     * or shift out of bounds.
+-     */
+-    int32_t total_samples = num_frames * samples_per_frame;
+-    int32_t total_bytes = total_samples << channels;
+-    return total_bytes;
++    if (num_frames <= 0 || samples_per_frame <= 0 || channels < 0 || channels > 8) {
++        return 0;
++    }
++
++    int64_t total_samples = static_cast<int64_t>(num_frames) * static_cast<int64_t>(samples_per_frame);
++    if (total_samples > 100000000LL) {
++        return -1;
++    }
++
++    int64_t total_bytes = total_samples << channels;
++    if (total_bytes > 0x7FFFFFFFLL) {
++        return -1;
++    }
++
++    return static_cast<int32_t>(total_bytes);
+ }
+ 
+ } // namespace tinymedia
