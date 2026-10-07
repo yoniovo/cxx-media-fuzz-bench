@@ -1,0 +1,49 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 3288459636
+INFO: Loaded 1 modules   (589 inline 8-bit counters): 589 [0x59e26e31a1e0, 0x59e26e31a42d), 
+INFO: Loaded 1 PC tables (589 PCs): 589 [0x59e26e31a430,0x59e26e31c900), 
+./bin/fuzzer_stream: Running 1 inputs 1 time(s) each.
+Running: tasks/task_02_double_free/poc.bin
+=================================================================
+==28208==ERROR: AddressSanitizer: attempting double-free on 0x74170bde0050 in thread T0:
+    #0 0x59e26e2c6ef1 in operator delete[](void*) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x157ef1) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #1 0x59e26e2cec20 in tinymedia::StreamFrameBuffer::~StreamFrameBuffer() /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/media_stream.cpp:11:9
+    #2 0x59e26e2cec20 in tinymedia::MediaStream::~MediaStream() /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/media_stream.cpp:42:27
+    #3 0x59e26e2cf246 in LLVMFuzzerTestOneInput /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/fuzzer/fuzzer_stream.cpp:26:1
+    #4 0x59e26e1c384f in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x5484f) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #5 0x59e26e1ac0b3 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x3d0b3) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #6 0x59e26e1b202c in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x4302c) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #7 0x59e26e1dce86 in main (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x6de86) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #8 0x77f70cc2a600 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:59:16
+    #9 0x77f70cc2a717 in __libc_start_main csu/../csu/libc-start.c:360:3
+    #10 0x59e26e1a6984 in _start (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x37984) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+
+0x74170bde0050 is located 0 bytes inside of 4-byte region [0x74170bde0050,0x74170bde0054)
+freed by thread T0 here:
+    #0 0x59e26e2c6ef1 in operator delete[](void*) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x157ef1) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #1 0x59e26e2ced9e in tinymedia::StreamFrameBuffer::release() /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/media_stream.cpp:30:9
+    #2 0x59e26e2ced9e in tinymedia::MediaStream::ingestFrame(unsigned char const*, unsigned long) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/media_stream.cpp:68:18
+    #3 0x59e26e2cf1b8 in LLVMFuzzerTestOneInput /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/fuzzer/fuzzer_stream.cpp:21:16
+    #4 0x59e26e1c384f in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x5484f) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #5 0x59e26e1ac0b3 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x3d0b3) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #6 0x59e26e1b202c in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x4302c) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #7 0x59e26e1dce86 in main (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x6de86) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #8 0x77f70cc2a600 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:59:16
+    #9 0x77f70cc2a717 in __libc_start_main csu/../csu/libc-start.c:360:3
+    #10 0x59e26e1a6984 in _start (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x37984) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+
+previously allocated by thread T0 here:
+    #0 0x59e26e2c68b1 in operator new[](unsigned long, std::nothrow_t const&) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x1578b1) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #1 0x59e26e2cedea in tinymedia::StreamFrameBuffer::allocate(unsigned long) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/media_stream.cpp:18:14
+    #2 0x59e26e2cedea in tinymedia::MediaStream::ingestFrame(unsigned char const*, unsigned long) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/media_stream.cpp:58:23
+    #3 0x59e26e2cf1b8 in LLVMFuzzerTestOneInput /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/fuzzer/fuzzer_stream.cpp:21:16
+    #4 0x59e26e1c384f in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x5484f) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #5 0x59e26e1ac0b3 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x3d0b3) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #6 0x59e26e1b202c in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x4302c) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #7 0x59e26e1dce86 in main (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x6de86) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+    #8 0x77f70cc2a600 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:59:16
+    #9 0x77f70cc2a717 in __libc_start_main csu/../csu/libc-start.c:360:3
+    #10 0x59e26e1a6984 in _start (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x37984) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70)
+
+SUMMARY: AddressSanitizer: double-free (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_stream+0x157ef1) (BuildId: b87d31bfcbd22515dd7cbd8e2328d297e15c0e70) in operator delete[](void*)
+==28208==ABORTING

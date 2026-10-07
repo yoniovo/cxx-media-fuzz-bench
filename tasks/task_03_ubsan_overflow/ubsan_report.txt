@@ -1,0 +1,8 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 4026211570
+INFO: Loaded 1 modules   (601 inline 8-bit counters): 601 [0x5ca360b1c240, 0x5ca360b1c499), 
+INFO: Loaded 1 PC tables (601 PCs): 601 [0x5ca360b1c4a0,0x5ca360b1ea30), 
+./bin/fuzzer_riff: Running 1 inputs 1 time(s) each.
+Running: tasks/task_03_ubsan_overflow/poc.bin
+src/riff_parser.cpp:170:40: runtime error: signed integer overflow: 2000000 * 2000 cannot be represented in type 'int32_t' (aka 'int')
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior src/riff_parser.cpp:170:40 

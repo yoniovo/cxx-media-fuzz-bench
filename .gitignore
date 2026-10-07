@@ -1,0 +1,10 @@
+bin/
+lib/
+*.o
+*.a
+crash-*
+leak-*
+timeout-*
+*.dSYM
+__pycache__/
+*.pyc

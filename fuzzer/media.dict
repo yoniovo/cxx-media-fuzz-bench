@@ -1,0 +1,12 @@
+# OSS-Fuzz dictionary for RIFF/media containers
+riff="RIFF"
+wave="WAVE"
+fmt="fmt "
+data="data"
+list="LIST"
+info="INFO"
+inam="INAM"
+iart="IART"
+icmt="ICMT"
+frame_std="\x01"
+frame_abort="\xEE"

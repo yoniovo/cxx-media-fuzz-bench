@@ -1,0 +1,71 @@
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 75521214
+INFO: Loaded 1 modules   (601 inline 8-bit counters): 601 [0x645ad8324240, 0x645ad8324499), 
+INFO: Loaded 1 PC tables (601 PCs): 601 [0x645ad83244a0,0x645ad8326a30), 
+./bin/fuzzer_riff: Running 1 inputs 1 time(s) each.
+Running: tasks/task_01_off_by_one/poc.bin
+=================================================================
+==28179==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b1035de0017 at pc 0x645ad82d3f04 bp 0x7ffcce7cd6b0 sp 0x7ffcce7cd6a8
+WRITE of size 1 at 0x7b1035de0017 thread T0
+    #0 0x645ad82d3f03 in tinymedia::RiffParser::parseMetadataTag(unsigned char const*, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>&) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:149:18
+    #1 0x645ad82d3652 in tinymedia::RiffParser::parseListChunk(unsigned char const*, unsigned long) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:124:13
+    #2 0x645ad82d25ea in tinymedia::RiffParser::parseChunk(unsigned char const*, unsigned long, unsigned long&) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:70:9
+    #3 0x645ad82d1e18 in tinymedia::RiffParser::parse(unsigned char const*, unsigned long) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:42:14
+    #4 0x645ad82d90c2 in LLVMFuzzerTestOneInput /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/fuzzer/fuzzer_riff.cpp:12:12
+    #5 0x645ad81cd84f in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x5484f) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #6 0x645ad81b60b3 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x3d0b3) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #7 0x645ad81bc02c in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x4302c) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #8 0x645ad81e6e86 in main (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x6de86) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #9 0x7ef036c2a600 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:59:16
+    #10 0x7ef036c2a717 in __libc_start_main csu/../csu/libc-start.c:360:3
+    #11 0x645ad81b0984 in _start (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x37984) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+
+0x7b1035de0017 is located 0 bytes after 7-byte region [0x7b1035de0010,0x7b1035de0017)
+allocated by thread T0 here:
+    #0 0x645ad82d0691 in operator new[](unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x157691) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #1 0x645ad82d3d27 in tinymedia::RiffParser::parseMetadataTag(unsigned char const*, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>&) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:147:17
+    #2 0x645ad82d3652 in tinymedia::RiffParser::parseListChunk(unsigned char const*, unsigned long) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:124:13
+    #3 0x645ad82d25ea in tinymedia::RiffParser::parseChunk(unsigned char const*, unsigned long, unsigned long&) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:70:9
+    #4 0x645ad82d1e18 in tinymedia::RiffParser::parse(unsigned char const*, unsigned long) /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:42:14
+    #5 0x645ad82d90c2 in LLVMFuzzerTestOneInput /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/fuzzer/fuzzer_riff.cpp:12:12
+    #6 0x645ad81cd84f in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x5484f) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #7 0x645ad81b60b3 in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x3d0b3) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #8 0x645ad81bc02c in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x4302c) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #9 0x645ad81e6e86 in main (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x6de86) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+    #10 0x7ef036c2a600 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:59:16
+    #11 0x7ef036c2a717 in __libc_start_main csu/../csu/libc-start.c:360:3
+    #12 0x645ad81b0984 in _start (/home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/bin/fuzzer_riff+0x37984) (BuildId: 242faa36b6024e503a3db7877eec97be7bdc46ec)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /home/yohan/Desktop/projects/afterquerry/sample projects/cxx-media-fuzz-bench/src/riff_parser.cpp:149:18 in tinymedia::RiffParser::parseMetadataTag(unsigned char const*, unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>&)
+Shadow bytes around the buggy address:
+  0x7b1035ddfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b1035ddfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b1035ddfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b1035ddff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x7b1035ddff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x7b1035de0000: fa fa[07]fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b1035de0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b1035de0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b1035de0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b1035de0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x7b1035de0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==28179==ABORTING
